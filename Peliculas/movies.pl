@@ -2994,6 +2994,17 @@ actor(a_view_from_the_bridge, anthony_lapaglia, eddie_carbone).
 
 :- dynamic movie/2.
 
+/*Predicado para el menu*/
+
+menu :-
+    write('Que quieres hacer?'), nl,
+    write('1. Alta pelicula'), nl,
+    write('2. Borrar pelicula'), nl,
+    write('3. Guardar base'), nl,
+    write('4. Salir'), nl,
+    write('Opcion: '),
+    read(N).
+
 /*Predicado para agregar una nueva película*/
 
 alta :-
@@ -3005,10 +3016,3 @@ alta :-
     assertz(movie(M, A)),
     write('Pelicula agregada exitosamente.'),
     nl.
-
-
-/*Predicado para mostrar las películas*/
-
-mostrar :-
-    movie(M, A),
-    format('Título: ~w~nAño: ~w~n~n', [M, A]).
