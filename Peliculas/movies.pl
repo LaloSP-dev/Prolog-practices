@@ -13,6 +13,12 @@ Modified from exercises found on the web. Not sure who first made them.  */
 
 */
 
+:- dynamic 
+        movie/2,
+        director/2,
+        actor/3,
+        actress/3.
+
 :- discontiguous
         movie/2,
         director/2,
@@ -2992,7 +2998,7 @@ movie(a_view_from_the_bridge, 2006).
 actress(a_view_from_the_bridge, scarlett_johansson, catherine).
 actor(a_view_from_the_bridge, anthony_lapaglia, eddie_carbone).
 
-:- dynamic movie/2.
+
 
 /*Predicado para el menu*/
 
@@ -3003,7 +3009,13 @@ menu :-
     write('3. Guardar base'), nl,
     write('4. Salir'), nl,
     write('Opcion: '),
-    read(N).
+    read(N), (
+        (N == 1, alta, nl);
+        (N == 2, write('Borrar'), nl);
+        (N == 3, write('Guardar'), nl);
+        (N == 4, fail, nl)
+    ),
+    menu.
 
 /*Predicado para agregar una nueva película*/
 
