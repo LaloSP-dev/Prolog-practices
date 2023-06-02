@@ -3011,7 +3011,7 @@ menu :-
     write('Opcion: '),
     read(N), (
         (N == 1, alta, nl);
-        (N == 2, write('Borrar'), nl);
+        (N == 2, borrar, nl);
         (N == 3, write('Guardar'), nl);
         (N == 4, fail, nl)
     ),
@@ -3024,7 +3024,16 @@ alta :-
     read(M),
     write('Año de la pelicula'), nl,
     read(A),
-    \+ movie(M, _),
+    \+ movie(M, _), %Verifica que la pelicula no exista previamente
     assertz(movie(M, A)),
     write('Pelicula agregada exitosamente.'),
+    nl.
+
+/*Predicado para borrar una pelicula*/
+
+borrar :-
+    write('Nombre de la pelicula: '), nl,
+    read(M),
+    retract(movie(M, _)),
+    write('Pelicula eliminada exitosamente'),
     nl.
