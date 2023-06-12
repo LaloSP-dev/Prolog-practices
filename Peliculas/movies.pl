@@ -3003,6 +3003,7 @@ actor(a_view_from_the_bridge, anthony_lapaglia, eddie_carbone).
 /*Predicado para el menu*/
 
 menu :-
+    repeat,
     write('Que quieres hacer?'), nl,
     write('1. Alta pelicula'), nl,
     write('2. Alta miembros'), nl,
@@ -3013,10 +3014,13 @@ menu :-
     read(N), (
         (N == 1, alta, nl);
         (N == 2, submenu, nl);
+        (N == 3, write('Borrar'), nl);
         (N == 4, modif, nl);
-        (N == 5, fail, nl)
+        (N == 5, !, fail, nl)
     ),
-    menu.
+    %Verifica si la opcion es valida
+    (N \== 1, N \== 2, N \== 3, N \== 4, N \== 5),
+    !.
 
 submenu :-
     write('Que quieres hacer?'), nl,
