@@ -3018,7 +3018,7 @@ menu :-
         (N == 4, modif, nl);
         (N == 5, !, fail, nl)
     ),
-    %Verifica si la opcion es valida
+    %Verifica si la opcion no es valida y repite el menu
     (N \== 1, N \== 2, N \== 3, N \== 4, N \== 5),
     !.
 
