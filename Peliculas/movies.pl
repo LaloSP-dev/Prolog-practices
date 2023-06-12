@@ -3005,18 +3005,53 @@ actor(a_view_from_the_bridge, anthony_lapaglia, eddie_carbone).
 menu :-
     write('Que quieres hacer?'), nl,
     write('1. Alta pelicula'), nl,
-    write('2. Borrar pelicula'), nl,
-    write('3. Guardar base'), nl,
-    write('4. Salir'), nl,
+    write('2. Alta miembros'), nl,
+    write('3. Borrar pelicula'), nl,
+    write('4. Modificar'), nl,
+    write('5. Salir'), nl,
     write('Opcion: '),
     read(N), (
         (N == 1, alta, nl);
-        (N == 2, borrar, nl);
-        (N == 3, write('Guardar'), nl);
-        (N == 4, fail, nl)
+        (N == 2, submenu, nl);
+        (N == 4, modif, nl);
+        (N == 5, fail, nl)
     ),
     menu.
 
+submenu :-
+    write('Que quieres hacer?'), nl,
+    write('1. Alta actores'), nl,
+    write('2. Alta actrices'), nl,
+    write('3. Alta director'), nl,
+    write('4. Salir submenu'), nl,
+    write('Opcion: '),
+    read(N), (
+        (N == 4, menu, nl)
+    ),
+    submenu.
+
+modif :-
+    write('Nombre de la pelicula: '), nl,
+    read(M), (
+        movie(M, _) -> (
+            write('Que quieres hacer?'), nl,
+            write('1. Modificar pelicula'), nl,
+            write('2. Modificar actor'), nl,
+            write('3. Modificar actriz'), nl,
+            write('4. Modificar director'), nl,
+            write('5. Salir submenu'), nl,
+            write('Opcion: '),
+            read(N), (
+                (N == 5, menu, nl)
+            ),
+            modif
+        );
+        (
+            write('Pelicula no escontrada'),nl,
+            menu
+        )
+
+    ).
 /*Predicado para agregar una nueva película*/
 
 alta :-
@@ -3028,12 +3063,121 @@ alta :-
     assertz(movie(M, A)),
     write('Pelicula agregada exitosamente.'),
     nl.
+/*
+alta_actor :-
+    nl,
+    write('Escribe f para terminar.'), nl,
+    write('Nombre de la pelicula:'), nl,
+    read(M),
+    write('Nombre del actor:'), nl,
+    read(A),
+    M \= 'f',
+    write('Roll del actor: '), nl,
+    read(R),
+    assertz(actor(M, A, R)),
+    alta_actor.
+
+alta_actriz :-
+    nl,
+    write('Escribe f para terminar.'), nl,
+    write('Nombre de la pelicula:'), nl,
+    read(M),
+    write('Nombre del actriz:'), nl,
+    read(A),
+    M \= 'f',
+    write('Roll de la actriz: '), nl,
+    read(R),
+    assertz(actress(M, A, R)),
+    alta_actriz.
+
+alta_direc :-
+    nl,
+    write('Escribe f para terminar.'), nl,
+    write('Nombre de la pelicula:'), nl,
+    read(M),
+    write('Nombre del director:'), nl,
+    read(D),
+    M \= 'f',
+    assertz(director(M, D)),
+    alta_direc.*/
+
+/*Modificar
+
+mod_peli :-
+    write('Nombre de la pelicula:'), nl,
+    read(M),
+    write('Año de la pelicula'), nl,
+    read(A),
+    movie(M, _),
+    retract(movie(M, _)),
+    assertz(movie(M, A)),
+    write('Pelicula agregada exitosamente.'),
+    nl.
+
+mod_actor(M) :-
+    nl,
+    write('Nombre del actor a modificiar:'), nl,
+    read(A),
+    retract(actor(M, A, _)),
+    write('Nombre de la pelicula:'), nl,
+    read(M),
+    write('Nombre del actor:'), nl,
+    read(A),
+    write('Roll del actor: '), nl,
+    read(R),
+    assertz(actor(M, A, R)),
+    mod_actor(M).
+
+mod_actriz(M) :-
+    nl,
+    write('Nombre del actor a modificiar:'), nl,
+    read(A),
+    retract(actress(M, A, _)),
+    write('Nombre de la pelicula:'), nl,
+    read(M),
+    write('Nombre de la actriz:'), nl,
+    read(A),
+    write('Roll de la actriz: '), nl,
+    read(R),
+    assertz(actress(M, A, R)),
+    mod_actriz(M).
+
+mod_direc(M) :-
+    nl,
+    write('Nombre del director a modificiar:'), nl,
+    read(A),
+    retract(director(M, A, _)),
+    write('Nombre de la pelicula:'), nl,
+    read(M),
+    write('Nombre del director:'), nl,
+    read(A),
+    assertz(director(M, A)),
+    mod_actor(M).*/
 
 /*Predicado para borrar una pelicula*/
-
+/*
 borrar :-
     write('Nombre de la pelicula: '), nl,
     read(M),
     retract(movie(M, _)),
+    retract(director(M, _)),
+    retract(actor(M, _, _)),
+    retract(actress(M, _, _)),
     write('Pelicula eliminada exitosamente'),
     nl.
+
+*/
+/*
+Para poder ingresar al menu principal solo basta con escribir
+    menu.
+
+Para poder hacer una consulta si se guardo los elementos hay que salir del menu y 
+hacer la consulta dependiendo a lo que desea buscar.
+
+    movie(M, A).
+    actor(M, A, R).
+    actress(M, A, R).
+    director(M, D).
+
+si regresa un true es por que si se guardo correctamente
+*/
